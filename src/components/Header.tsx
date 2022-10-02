@@ -1,7 +1,7 @@
 const Header = () => {
   return (
     <div className="border-b">
-      <div className="mx-auto flex min-h-[96px] max-w-7xl items-center justify-between">
+      <div className="mx-auto flex min-h-[96px] max-w-7xl items-center justify-between px-4">
         <img
           src="/images/aviato.png"
           alt="Aviato Logo"

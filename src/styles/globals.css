@@ -1,3 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: EuclidSquare;
+  src: url(/fonts/EuclidSquare-Medium.woff);
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: EuclidSquare;
+  src: url(/fonts/EuclidSquare-SemiBold.woff);
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: EuclidSquare;
+  src: url(/fonts/EuclidSquare-Bold.woff);
+  font-weight: 700;
+}
+
+body {
+  font-family: EuclidSquare, sans-serif;
+  font-weight: 500;
+}
