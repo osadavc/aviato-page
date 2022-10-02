@@ -1,5 +1,6 @@
 import Companies from "./Companies";
 import Tabs from "./Tabs";
+import Videos from "./Videos";
 
 const Main = () => {
   return (
@@ -12,7 +13,9 @@ const Main = () => {
       <div className="flex items-center justify-center">
         <Tabs />
       </div>
-      <div className="flex-grow">Main Section</div>
+      <div className="flex-grow">
+        <Videos />
+      </div>
       <div className="w-[350px]">
         <Companies />
       </div>
