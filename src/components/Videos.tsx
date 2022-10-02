@@ -1,17 +1,9 @@
-import { FC } from "react";
+import { FC, useEffect, useRef, useState } from "react";
+import { useInView } from "react-intersection-observer";
 
 const videoList = [
   {
-    title: "Building the best startup of all time ",
-    tags: ["Transport", "Computer"],
-    profile: {
-      name: "Eric Zhu",
-      title: "Aviato",
-      image: "/images/assets/eric.png",
-    },
-    video: "/videos/People.mp4",
-  },
-  {
+    videoId: "1",
     title: "Building the best startup of all time ",
     tags: ["Transport", "Computer"],
     profile: {
@@ -23,6 +15,18 @@ const videoList = [
   },
   {
     title: "Building the best startup of all time ",
+    videoId: "2",
+    tags: ["Transport", "Computer"],
+    profile: {
+      name: "Eric Zhu",
+      title: "Aviato",
+      image: "/images/assets/eric.png",
+    },
+    video: "/videos/People.mp4",
+  },
+  {
+    title: "Building the best startup of all time ",
+    videoId: "3",
     tags: ["Transport", "Computer"],
     profile: {
       name: "Eric Zhu",
@@ -33,6 +37,7 @@ const videoList = [
   },
   {
     title: "Building the best startup of all time ",
+    videoId: "4",
     tags: ["Transport", "Computer"],
     profile: {
       name: "Eric Zhu",
@@ -43,6 +48,7 @@ const videoList = [
   },
   {
     title: "Building the best startup of all time ",
+    videoId: "5",
     tags: ["Transport", "Computer"],
     profile: {
       name: "Eric Zhu",
@@ -53,6 +59,7 @@ const videoList = [
   },
   {
     title: "Building the best startup of all time ",
+    videoId: "6",
     tags: ["Transport", "Computer"],
     profile: {
       name: "Eric Zhu",
@@ -64,6 +71,8 @@ const videoList = [
 ];
 
 const Videos = () => {
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+
   return (
     <div
       className="space-y-8 overflow-scroll px-4 pb-10"
@@ -73,7 +82,12 @@ const Videos = () => {
     >
       {videoList.map((video, index) => (
         // Math.random used for demo purposes
-        <SingleVideo key={Math.random()} {...video} />
+        <SingleVideo
+          key={Math.random()}
+          {...video}
+          isVideoPlaying={isVideoPlaying}
+          setIsVideoPlaying={setIsVideoPlaying}
+        />
       ))}
     </div>
   );
@@ -88,16 +102,44 @@ interface SingleVideoProps {
     image: string;
   };
   video: string;
+  isVideoPlaying: boolean;
+  setIsVideoPlaying: (value: boolean) => void;
 }
 
+const checkIsVideoPlaying = (video: HTMLVideoElement) =>
+  !!(
+    video.currentTime > 0 &&
+    !video.paused &&
+    !video.ended &&
+    video.readyState > 2
+  );
+
 const SingleVideo: FC<SingleVideoProps> = ({ profile, tags, title, video }) => {
+  const { ref, inView } = useInView();
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      if (inView) {
+        if (!checkIsVideoPlaying(videoRef.current)) {
+          videoRef.current?.play();
+        }
+      } else {
+        if (checkIsVideoPlaying(videoRef.current)) {
+          videoRef.current?.pause();
+        }
+      }
+    }
+  }, [inView, videoRef]);
+
   return (
-    <div className="relative h-[600px] rounded-2xl">
+    <div className="relative h-[600px] rounded-2xl" ref={ref}>
       <video
         src={video}
-        loop={true}
-        muted={false}
+        loop={false}
+        muted={true}
         className="absolute left-0 top-0 z-0 h-full w-full overflow-hidden rounded-[40px] object-cover"
+        ref={videoRef}
       ></video>
       <div className="absolute z-[5] h-full w-full rounded-[40px] bg-black/10" />
       <div className="absolute z-10 flex h-full w-full flex-col justify-end px-10 text-white">
