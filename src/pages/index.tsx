@@ -4,7 +4,7 @@ import Main from "../components/Main";
 
 const Home: NextPage = () => {
   return (
-    <div className="min-h-screen">
+    <div className="h-screen overflow-hidden">
       <Header />
       <Main />
     </div>

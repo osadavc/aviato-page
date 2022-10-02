@@ -1,18 +1,21 @@
+import Companies from "./Companies";
 import Tabs from "./Tabs";
 
 const Main = () => {
   return (
     <div
-      className="bold mx-auto flex max-w-7xl px-4"
+      className="bold mx-auto flex max-w-7xl px-4 pt-7"
       style={{
-        minHeight: "calc(100vh - 100px)",
+        height: "calc(100vh - 100px)",
       }}
     >
       <div className="flex items-center justify-center">
         <Tabs />
       </div>
       <div className="flex-grow">Main Section</div>
-      <div className="w-[350px]">Companies</div>
+      <div className="w-[350px]">
+        <Companies />
+      </div>
     </div>
   );
 };
